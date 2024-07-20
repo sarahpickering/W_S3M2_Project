@@ -27,8 +27,13 @@
     // 🧠 Examples of usage:
     // processSingleLearner({ name: "Elisabeth", lovesJS: 1 }) // should return { name: "Elisabeth", lovesJS: true }
     // processSingleLearner({ name: "Pete", age: 23, lovesJS: 0 }) // should return { name: "Pete", age: 23, lovesJS: false }
-    const processSingleLearner = () => {
-
+    const processSingleLearner = (learner) => {
+      if (learner.lovesJS === 0) {
+        learner.lovesJS = false
+      } else if (learner.lovesJS === 1) {
+        learner.lovesJS = true
+      }
+      return learner
     }
 
     // 👉 CHALLENGE 2
@@ -41,8 +46,12 @@
     // ❗ Notes:
     // 🧠 There are many approaches to this problem: using a loop, using forEach, using map...
     // 🧠 Solve this challenge using a for/in loop or a for loop.
-    const processLearnersLoop = () => {
-
+    const processLearnersLoop = (learners) => {
+        for (let index in learners) {
+          const learner = learners[index]
+          processSingleLearner(learner)
+        }
+        return learners
     }
 
     // 👉 CHALLENGE 3
@@ -51,8 +60,11 @@
     // ❗ Notes:
     // 🧠 Solve this challenge using the forEach method of the learners array.
     // 🧠 Use arrow functions whenever possible.
-    const processLearnerForEach = () => {
-
+    const processLearnerForEach = (learners) => {
+      learners.forEach(learner => {
+        processSingleLearner(learner)
+      })
+      return learners
     }
 
     // 👉 CHALLENGE 4
@@ -61,8 +73,9 @@
     // ❗ Notes:
     // 🧠 Solve this challenge using the map method of the learners array.
     // 🧠 Use arrow functions.
-    const processLearnerMap = () => {
-
+    const processLearnerMap = (learners) => {
+      const result = learners.map(processSingleLearner)
+        return result
     }
 
     // 👉 CHALLENGE 5
@@ -73,17 +86,38 @@
     // ❗ Notes:
     // 🧠 Solve this challenge using the forEach method of the learners array.
     // 🧠 You will need to declare a result array into which you push learners from inside your forEach loop.
-    const getJavaScriptLoversForEach = () => {
+    const getJavaScriptLoversForEach = (learners) => {
+      let result = []
 
+      learners.forEach(learner => {
+        if (learner.lovesJS) {
+        result.push(learner)
+      } 
+    })
+
+    if (!result.length) {
+      return "no JS lovers here!"
     }
+    return result
+  }
+      
 
     // 👉 CHALLENGE 6
     // 🧠 The function getJavaScriptLoversFilter takes an array of learner objects and returns an array or a string.
     // 🧠 It should work exactly the same as the getJavaScriptLoversForEach function above.
     // ❗ Notes:
     // 🧠 Solve this challenge using the filter method of the learners array.
-    const getJavaScriptLoversFilter = () => {
-
+    const getJavaScriptLoversFilter = (learners) => {
+      let filtered = learners.filter(learner => {
+        if (learner.lovesJS) {
+        return true
+      } 
+      return false
+    })
+    if (!filtered.length) {
+      return "no JS lovers here!"
+    }
+    return filtered
     }
 
     // 👉 CHALLENGE 7
@@ -98,8 +132,16 @@
     // ❗ Notes:
     // 🧠 This could be solved by using filter to make an array of odd integers, and then using forEach to add them up.
     // 🧠 Or you could opt for solving everything with a single forEach which is the recommended approach (saves a loop).
-    const sumOddInts = () => {
-
+    const sumOddInts = (integers) => {
+      let odds = []
+      let sum = 0
+      integers.forEach(int => {
+        if (int % 2 !== 0) {
+          odds.push(int)
+          sum += int
+        }
+      })
+      return [sum, odds]
     }
 
     // 👉 CHALLENGE 8
@@ -113,7 +155,16 @@
     // checkInts(2, 6) // should return ["even", "even"]
     // ❗ Notes:
     // 🧠 Solve this problem using rest parameters and map.
-    const checkInts = () => {
+    const checkInts = (...nums) => {
+      if (!nums.length) {
+        return "pass some arguments, yo!"
+      }
+      return nums.map(num => {
+        if (num % 2 === 0) {
+          return 'even'
+        } 
+        return 'odd'
+      })
 
     }
 
